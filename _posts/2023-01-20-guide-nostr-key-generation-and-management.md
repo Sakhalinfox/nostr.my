@@ -67,12 +67,12 @@ ios_nostore_images:
     title: "iOS Nostore setup step 4"
   - url: /assets/images/2023-01-20-guide-nostr-key-generation-and-management/ios_nostore5.jpeg
     image_path: /assets/images/2023-01-20-guide-nostr-key-generation-and-management/ios_nostore5.jpeg
-    alt: "iOS Nostore setupsetup step 5"
+    alt: "iOS Nostore setup step 5"
     title: "iOS Nostore setup setup step 5"
   - url: /assets/images/2023-01-20-guide-nostr-key-generation-and-management/ios_nostore6.jpeg
     image_path: /assets/images/2023-01-20-guide-nostr-key-generation-and-management/ios_nostore6.jpeg
-    alt: "iOS Nostore setup setup step 6"
-    title: "iOS Nostore setup setup step 6"
+    alt: "iOS Nostore setup step 6"
+    title: "iOS Nostore setup step 6"
 ---
 
 # Understanding Nostr keys
@@ -89,16 +89,16 @@ There are two formats for the keypair as mentioned in [NIP-19](https://github.co
 >**Important**: It is necessary to safeguard your private key from loss, theft and prying eyes. Generate, store and input it securely. Do not paste your private key into any web clients.
 {: .notice--danger}
 
-With some tools it is also possible to generate Proof of Work (POW) public keys (mined public key) with certain accepted characters. This can be used to generate a vanity public key with your name, as long as your name as the accepted chracters, or to generate a public key with leading zeros indicating that some POW is performed to generate it. 
+With some tools it is also possible to generate Proof of Work (POW) public keys (mined public key) with certain accepted characters. This can be used to generate a vanity public key with your name, as long as your name as the accepted characters, or to generate a public key with leading zeros indicating that some POW is performed to generate it.
 
 >**Note**: One spam reduction measure would be for Nostr relays to whitelist POW generated public keys with a minimum POW bits. This could indicate that with an average computer it could take few minutes to several hours or days to generate depending on the length of the vanity name or the leading zeros (POW bits). This may or may not eliminate spam.
 {: .notice--info}
 
 # Tools to generate Nostr keypair offline
 
-The first step is to securely generate the keypair offline, not through web clients. Genering the key offline ensures that it does not get leaked, lost or stored online. Although web clients must not store your private keys remotely, this can never be guaranteed. A malicious web client can steal your private keys. Also, security vulnerabilities in web clients can leak your private keys if you have inputted it directly into the web client.
+The first step is to securely generate the keypair offline, not through web clients. Generating the key offline ensures that it does not get leaked, lost or stored online. Although web clients must not store your private keys remotely, this can never be guaranteed. A malicious web client can steal your private keys. Also, security vulnerabilities in web clients can leak your private keys if you have inputted it directly into the web client.
 
-Use an offline or airgapped device while using the below tools to generate your keypair. Do not use any of the private keys generated in this guide as everyone has access to it.
+Use an offline or air-gapped device while using the below tools to generate your keypair. Do not use any of the private keys generated in this guide as everyone has access to it.
 
 >**Warning**: For privacy and security reasons it is recommended to output the keypair, especially the private key, to a text file from the console. This is because the console maintains a history of all your commands and can store the private key in the console history file for your OS.
 {: .notice--warning}
@@ -162,7 +162,7 @@ Use an offline or airgapped device while using the below tools to generate your 
         python3 generate.py > keypair.txt
       ```
 
-3. [Nostril](https://github.com/jb55/nostril) A command line utility to generate muliple nostr events. It also provides a simple 
+3. [Nostril](https://github.com/jb55/nostril) A command line utility to generate multiple nostr events. It also provides a simple way to mine a pubkey:
 
     - Install gcc or g++ for your OS
     - Clone the repository and run `cd` to change directory to the cloned folder:
@@ -180,7 +180,7 @@ Use an offline or airgapped device while using the below tools to generate your 
       ```
       nostril --mine-pubkey --pow <difficulty> > output.txt
       ```
-      >**Note**: Replace `<difficulty>` with an integer value. Entering 0 would immediately generate a 32 byte hex privatekey (secret_key) and publick key (pubkey)
+      >**Note**: Replace `<difficulty>` with an integer value. Entering 0 would immediately generate a 32 byte hex privatekey (secret_key) and public key (pubkey)
       {: .notice--info}
       ```
       Example input:
@@ -195,7 +195,7 @@ Use an offline or airgapped device while using the below tools to generate your 
 4. Generate a Nostr private key from Bitcoin [BIP-85](https://bip85.com/) deterministic entropy derived seed. BIP-85 can derive multiple child seed phrases from one master seed phrase. Its benefits are:
 
   - Each derived child seed is unique using a one-way mathematical function.
-  - The derived seeds are not tracable or cannot be reverse engineered to derive the master seed or other child seeds.
+  - The derived seeds are not traceable or cannot be reverse engineered to derive the master seed or other child seeds.
   - Easy to backup just the master seed and regenerate at any time any of the child seeds. This allows to maintain just one backup of the master seed and derive multiple child seeds at any time.
   - If any derived child seed is compromised, the other child seeds and the master seed are safe.
   - If you have a ColdCard you can generate BIP-85 child seeds and convert each of them to an individual Nostr private key.
@@ -242,7 +242,7 @@ Benefits:
 
   These tools make use of `window.nostr` capability of the web browsers as mentioned in [NIP-07](https://github.com/nostr-protocol/nips/blob/master/07.md) to return the following without sharing your private key with the Nostr client:
 
-  - Returns your puiblic key after you authorize.
+  - Returns your public key after you authorize.
   - Returns `id`, `public key` and `signature` for signing an event. For example: When you make a post on Nostr social clients, they will need to be signed by your private key using the extension, and only those three values are returned to the client.
   - Returns Relay URLs
   - Returns ciphertext base64-encoded initialization vector `iv` as per [NIP-04](https://github.com/nostr-protocol/nips/blob/master/04.md) for encrypted direct messages
@@ -254,11 +254,11 @@ Benefits:
 
 Limitations:
 
-- <ins>Can require excessive extension permissions</ins>: Most Nostr signer brwoser extensions currently require access to data from all sites you visit. Depending on your privacy setup, you may want to use a separate browser or a new browser profile for everything Nostr related with no other extensions installed.
-- <ins>Requires trusting extension to not reveal or leak your stored private keys</ins>: Security vulnerabilities in software, extensions or your operating system could leak your private keys. You will need to maintian good security practices for your desktop or mobile device while using these extension on your devices like keeping your OS up to date, updating extensions to patch any known vulnerabilities and securing your browser access from others accessing it to view your private key from the extension.
-- <ins>No airgapped signing of events</ins>: Invalidates the purpose of generating your private keys offline, if you need to paste them into a browser extension in an online environment. 
+- <ins>Can require excessive extension permissions</ins>: Most Nostr signer browser extensions currently require access to data from all sites you visit. Depending on your privacy setup, you may want to use a separate browser or a new browser profile for everything Nostr related with no other extensions installed.
+- <ins>Requires trusting extension to not reveal or leak your stored private keys</ins>: Security vulnerabilities in software, extensions or your operating system could leak your private keys. You will need to maintain good security practices for your desktop or mobile device while using these extension on your devices like keeping your OS up to date, updating extensions to patch any known vulnerabilities and securing your browser access from others accessing it to view your private key from the extension.
+- <ins>No air-gapped signing of events</ins>: Invalidates the purpose of generating your private keys offline, if you need to paste them into a browser extension in an online environment.
 
->**Note**: It is still early days and developments in the Nostr community and improvements in key management and derivation will be implemented gradaully. Hardware wallets or signing devices might add [support](https://twitter.com/COLDCARDwallet/status/1608886079159160834) for exporting keys, signing events via NFC, USB connection or a signature file. 
+>**Note**: It is still early days and developments in the Nostr community and improvements in key management and derivation will be implemented gradually. Hardware wallets or signing devices might add [support](https://twitter.com/COLDCARDwallet/status/1608886079159160834) for exporting keys, signing events via NFC, USB connection or a signature file.
 {: .notice--info}
 
 ### Nos2x, Nos2x-fox and Alby Nostr signer extensions
@@ -304,9 +304,9 @@ Limitation of using Alby:
 1. Install any of the extensions from the links above for your browser.
 2. Visit the options page or preferences page to input your private key. This is the only place where you will need to input your Nostr private key and is a one-time setup.
 
-    - In Firefox go to `Addons and themes` (Ctlr + Shift + A) and clcik on Extensions. Find nos2x-fox, enable it, click on the enabled extensions and go to `Preferences`. Here you can generate a private key offline or you can paste an existing private key that you had generated offline.
+    - In Firefox go to `Addons and themes` (Ctrl + Shift + A) and click on Extensions. Find nos2x-fox, enable it, click on the enabled extensions and go to `Preferences`. Here you can generate a private key offline or you can paste an existing private key that you had generated offline.
 
-      If you installed Alby you will be presented with a `Get Started` page to set an unlock password. The unlock password would be required everytime you use alby to configure your Nostr private key. Set the password, sign up to Alby and login. After logging in, click open Alby's settings, under `Alby lab` there should be a Nostr section. Here you can generate a private key offline or you can paste an existing private key that you had generated offline.
+      If you installed Alby you will be presented with a `Get Started` page to set an unlock password. The unlock password would be required every time you use alby to configure your Nostr private key. Set the password, sign up to Alby and login. After logging in, click open Alby's settings, under `Alby lab` there should be a Nostr section. Here you can generate a private key offline or you can paste an existing private key that you had generated offline.
 
     - In Chrome type in `chrome://extensions/` in the address bar. Find [nos2x](https://addons.mozilla.org/en-US/firefox/addon/nos2x-fox/), enable it, click details, click `Extension options`.  Here you can generate a private key offline or you can paste an existing private key that you had generated offline. Click save.
 3. Visit any web client like [astral.ninja](https://astral.ninja), [snort.social](https://snort.social) [hamstr.to](https://hamstr.to), [yosup.app](https://yosup.app) or [iris.to](https://iris.to) and login. You will be prompted to authorize reading of your public key whe as you login. 
@@ -317,7 +317,7 @@ Limitation of using Alby:
 #### Steps to setup and use on Android devices
 
 1. Install [Kiwi browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=en_US&gl=US&pli=1) from Play store and install the [nos2x](https://addons.mozilla.org/en-US/firefox/addon/nos2x-fox/) or [Alby](https://chrome.google.com/webstore/detail/alby-bitcoin-lightning-wa/iokeahhehimjnekafflcihljlcjccdbe) chrome extension.
-2. Go to browser settings menu, enable the extnesion from the browser's extension page, go to preferences or options and generate or paste your offline generated Nostr private key.
+2. Go to browser settings menu, enable the extension from the browser's extension page, go to preferences or options and generate or paste your offline generated Nostr private key.
 
 3. Visit any web client like [astral.ninja](https://astral.ninja), [snort.social](https://snort.social) [hamstr.to](https://hamstr.to), [yosup.app](https://yosup.app) or [iris.to](https://iris.to) and login. You will be prompted to authorize reading of your public key whe as you login. 
 
@@ -335,11 +335,11 @@ Limitation of using Alby:
 
 Nostore is a Safari extension that allows managing multiple profiles consisting with which you can store and manage multiple Nostr private keys. 
 
->**Warning**: This extension is still in iOS Test Flight and is still in active development or alphe/beta stage. It is recommended to use it only for testing until a stable enough release is out.
+>**Warning**: This extension is still in iOS Test Flight and is still in active development or alpha/beta stage. It is recommended to use it only for testing until a stable enough release is out.
 {: .notice--warning}
 
 1. Install Nostore from iOS [Test Flight](https://testflight.apple.com/join/ouPWAQAV), open it and click `Start testing`.
-2. Launch Safari browser, open a Nostr web client like [snort.social](https://snort.social), click on `AA` button on the address bar, click manage extesions, enable Nostore and click `Done`.
+2. Launch Safari browser, open a Nostr web client like [snort.social](https://snort.social), click on `AA` button on the address bar, click manage extensions, enable Nostore and click `Done`.
 3. Once again click on `AA` button on the address bar, click `Nostore` extension:
     - A new profile will be auto-generated with the private key. You can choose to use it or input your offline generated private key. Configure the profile name as needed and click save.
     - You can also add another profile or private key by clicking the `New` button.
@@ -369,7 +369,7 @@ Nostr clients for iOS, Android or desktop Operating Systems will self manage Nos
 - [Damus for MacOS](https://testflight.apple.com/join/CLwjLxWl) - Currently on TestFlight and the beta invitation status might be full. Will be available on AppStore soon. You will need to input your offline generated private key into the client.
 
 
-## Nostr native Social clients (alpha/experimantal)
+## Nostr native Social clients (alpha/experimental)
 
 Listed below are native clients that are in experimental or alpha development status, and may or may not fully feature account management.
 
